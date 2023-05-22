@@ -31,6 +31,8 @@ dependencies {
     // https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server
     implementation 'org.eclipse.jetty:jetty-server:11.0.12'
     implementation 'org.eclipse.jetty:jetty-servlet:11.0.12'
+
+    implementation 'io.prometheus:simpleclient_httpserver:0.9.0'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
