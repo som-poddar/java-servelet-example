@@ -30,7 +30,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server
     implementation 'org.eclipse.jetty:jetty-server:11.0.12'
-    implementation 'org.eclipse.jetty:jetty-servlet:11.0.12'
+
+    // https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet
+    implementation 'org.eclipse.jetty:jetty-servlet:9.4.15.v20190215'
 
     // https://mvnrepository.com/artifact/io.prometheus/simpleclient_httpserver
     implementation 'io.prometheus:simpleclient_httpserver:0.16.0'
