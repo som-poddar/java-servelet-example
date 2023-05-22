@@ -23,6 +23,7 @@ public class App {
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp)
         throws ServletException, IOException {
       resp.getWriter().println("Hello World!");
+      
       // Increment the number of requests.
       requests.inc();
     }
