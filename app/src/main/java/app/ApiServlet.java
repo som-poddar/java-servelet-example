@@ -11,6 +11,7 @@ import io.prometheus.client.Counter;
 import io.prometheus.client.Gauge;
 import io.prometheus.client.Histogram;
 import io.prometheus.client.Summary;
+// import io.prometheus.client.hotspot.DefaultExports;
 
 public class ApiServlet extends HttpServlet {
     private static final String NAMESPACE_JAVA_APP = "servlet_example";
@@ -21,6 +22,7 @@ public class ApiServlet extends HttpServlet {
 
     public void init() {
         System.out.println("Hello from Servlet on init");
+        // DefaultExports.initialize();
         CollectorRegistry registry = CollectorRegistry.defaultRegistry;
         counter = counter(registry);
         gauge = guage(registry);

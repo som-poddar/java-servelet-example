@@ -3,8 +3,14 @@
  */
 package app;
 
+import java.net.InetSocketAddress;
+
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
+
+import com.sun.net.httpserver.HttpServer;
+
+import io.prometheus.client.*;
 
 public class App {
     public String getGreeting() {
@@ -13,17 +19,35 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         System.out.println(new App().getGreeting());
-
+/* 
         var server = new Server(8082);
 
         var handler = new ServletHandler();
         server.setHandler(handler);
         // ApiServlet app = new ApiServlet(CollectorRegistry.defaultRegistry);
         handler.addServletWithMapping(HealthServlet.class, "/health");
-        handler.addServletWithMapping(MetricServlet.class, "/metric");
+        // handler.addServletWithMapping(MetricServlet.class, "/metric");
         handler.addServletWithMapping(ApiServlet.class, "/api");
+        // handler.addServletWithMapping(MetricServlet.class, "/metrics");
+        // context.addServlet(new ServletHolder(new MetricsServlet()), "/metrics");
+        // https://github.com/prometheus/client_java#exporting
+        // integration_tests/it_servlet_jakarta_exporter_webxml/src/main/java/io/prometheus/client/it/servlet/jakarta/ExampleServlet.java
+
+        // https://github.com/prometheus/client_java/blob/da243e272d80d58d4b8bbf5c63d4aec4feaed51a/integration_tests/it_servlet_jakarta_exporter_webxml/src/main/java/io/prometheus/client/it/servlet/jakarta/ExampleServlet.java
 
         server.start();
         server.join();
+        */
+        CollectorRegistry registry = CollectorRegistry.defaultRegistry;
+        HttpServer server = HttpServer.create(new InetSocketAddress(8001), 0);
+        MetricHandler mHandler = new MetricHandler(registry);
+
+        server.createContext("/", mHandler);
+        server.createContext("/metrics", mHandler);
+        server.createContext("/healthy", mHandler);
+
+        // addContext(server, mHandler);
+        server.setExecutor(null); // creates a default executor
+        server.start();
     }
 }
