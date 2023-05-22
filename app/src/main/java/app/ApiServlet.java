@@ -31,13 +31,19 @@ import io.prometheus.client.exporter.common.TextFormat;
 
 public class ApiServlet extends HttpServlet {
     private static final String NAMESPACE_JAVA_APP="servlet_example";
+    // private final CollectorRegistry registry;
+    private Counter counter;
+
+    public void init() {
+        System.out.println("Hello from Servlet on init");
+        CollectorRegistry registry = CollectorRegistry.defaultRegistry;
+        counter = counter(registry);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-                    CollectorRegistry registry = CollectorRegistry.defaultRegistry;
-                    populateMetric(registry);
+                    populateMetric(this.counter);
                     response.getWriter().println("{ \"status\": \"ok (populateMetric)\"}");
                     response.setStatus(HttpServletResponse.SC_OK);
 
@@ -50,16 +56,15 @@ public class ApiServlet extends HttpServlet {
         response.setContentType("application/json");
     }
 
-        private static void populateMetric(CollectorRegistry registry) {
-        Counter counter = counter(registry);
-
-        Gauge gauge = guage(registry);
-        Histogram histogram = histogram();
-        Summary summary = summary(registry);
-                    counter.inc(rand(0, 5));
+        private static void populateMetric(Counter ctr) {
+        // Gauge gauge = guage(registry);
+        // Histogram histogram = histogram();
+        // Summary summary = summary(registry);
+                    ctr.inc(rand(0,15));
                     // gauge.set(rand(-5, 10));
                     // histogram.observe(rand(0, 5));
                     // summary.observe(rand(0, 5));
+                            System.out.println("counter incremented.");
                 }
 private static Summary summary(CollectorRegistry registry) {
         return Summary.build()
