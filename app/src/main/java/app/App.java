@@ -6,11 +6,6 @@ package app;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
 
-import io.prometheus.client.CollectorRegistry;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
-
 public class App {
     public String getGreeting() {
         return "Hello World!";

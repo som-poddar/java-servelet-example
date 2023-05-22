@@ -6,67 +6,47 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.URLDecoder;
-import java.nio.charset.Charset;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.zip.GZIPOutputStream;
-
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
-
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Counter;
 import io.prometheus.client.Gauge;
 import io.prometheus.client.Histogram;
 import io.prometheus.client.Summary;
-import io.prometheus.client.exporter.common.TextFormat;
 
 public class ApiServlet extends HttpServlet {
-    private static final String NAMESPACE_JAVA_APP="servlet_example";
-    // private final CollectorRegistry registry;
+    private static final String NAMESPACE_JAVA_APP = "servlet_example";
     private Counter counter;
+    private Gauge gauge;
+    private Histogram histogram;
+    private Summary summary;
 
     public void init() {
         System.out.println("Hello from Servlet on init");
         CollectorRegistry registry = CollectorRegistry.defaultRegistry;
         counter = counter(registry);
+        gauge = guage(registry);
+        histogram = histogram();
+        summary = summary(registry);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                    populateMetric(this.counter);
-                    response.getWriter().println("{ \"status\": \"ok (populateMetric)\"}");
-                    response.setStatus(HttpServletResponse.SC_OK);
+        populateMetric(this.counter, this.gauge, this.histogram, this.summary);
 
-                /*
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                    response.getWriter().println("{ \"status\": \"not ok \"}");
-                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                }*/
+        response.getWriter().println("{ \"status\": \"ok (populate Metric)\"}");
+        response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
     }
 
-        private static void populateMetric(Counter ctr) {
-        // Gauge gauge = guage(registry);
-        // Histogram histogram = histogram();
-        // Summary summary = summary(registry);
-                    ctr.inc(rand(0,15));
-                    // gauge.set(rand(-5, 10));
-                    // histogram.observe(rand(0, 5));
-                    // summary.observe(rand(0, 5));
-                            System.out.println("counter incremented.");
-                }
-private static Summary summary(CollectorRegistry registry) {
+    private static void populateMetric(Counter ctr, Gauge gauge, Histogram histogram, Summary summary) {
+        ctr.inc(rand(0, 15));
+        gauge.set(rand(-5, 10));
+        histogram.observe(rand(0, 5));
+        summary.observe(rand(0, 5));
+        System.out.println("populateMetric done.");
+    }
+
+    private static Summary summary(CollectorRegistry registry) {
         return Summary.build()
                 .namespace(NAMESPACE_JAVA_APP)
                 .name("s")
@@ -101,4 +81,4 @@ private static Summary summary(CollectorRegistry registry) {
     private static double rand(double min, double max) {
         return min + (Math.random() * (max - min));
     }
-    }
+}
