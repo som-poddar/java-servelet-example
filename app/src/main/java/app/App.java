@@ -20,6 +20,7 @@ public class App {
 
         handler.addServletWithMapping(HealthServlet.class, "/health");
         handler.addServletWithMapping(MetricServlet.class, "/metric");
+
         server.start();
         server.join();
     }
