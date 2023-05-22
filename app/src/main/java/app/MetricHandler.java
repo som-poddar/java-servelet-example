@@ -4,23 +4,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPOutputStream;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
 
 import io.prometheus.client.CollectorRegistry;
-import io.prometheus.client.Counter;
-import io.prometheus.client.Gauge;
-import io.prometheus.client.Histogram;
-import io.prometheus.client.Summary;
 import io.prometheus.client.exporter.common.TextFormat;
 
 public class MetricHandler implements HttpHandler {
@@ -35,7 +28,6 @@ public class MetricHandler implements HttpHandler {
         }
     }
 
-    private final static String HEALTHY_RESPONSE = "Exporter is Healthy.";
 
     private final CollectorRegistry registry;
     private final LocalByteArray response = new LocalByteArray();

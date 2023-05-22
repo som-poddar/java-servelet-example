@@ -13,12 +13,12 @@ import com.sun.net.httpserver.HttpServer;
 import io.prometheus.client.*;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
+    public String startupMessage() {
+        return "App has started!";
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println(new App().getGreeting());
+        System.out.println(new App().startupMessage());
 /* 
         var server = new Server(8082);
 
