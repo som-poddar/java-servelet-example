@@ -13,23 +13,9 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import java.io.IOException;
 
 import com.mycompany.service.HealthServlet;
+import com.mycompany.service.HelloWorldServlet;
 
 public class App {
-    static class ExampleServlet extends HttpServlet {
-    static final Counter requests = Counter.build()
-        .name("hello_worlds_total")
-        .help("Number of hello worlds served.").register();
-
-    @Override
-    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp)
-        throws ServletException, IOException {
-      resp.getWriter().println("Hello World!");
-      
-      // Increment the number of requests.
-      requests.inc();
-    }
-  }
-
     public static void main( String[] args ) throws Exception {
         System.out.println( "Server Starting ... " );
 
@@ -38,12 +24,11 @@ public class App {
       context.setContextPath("/");
       server.setHandler(context);
 
-      // Expose our example servlet.
-      context.addServlet(new ServletHolder(new ExampleServlet()), "/");
-      
+      // methods for api consumer
+      context.addServlet(new ServletHolder(new HelloWorldServlet()), "/message");
       context.addServlet(new ServletHolder(new HealthServlet()), "/health");
 
-      // Expose Promtheus metrics.
+      // methods for prom scraper
       context.addServlet(new ServletHolder(new MetricsServlet()), "/metrics");
 
       // Add metrics about CPU, JVM memory etc.
