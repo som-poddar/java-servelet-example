@@ -12,6 +12,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import java.io.IOException;
 
+import com.mycompany.service.HealthServlet;
 
 public class App {
     static class ExampleServlet extends HttpServlet {
@@ -39,6 +40,8 @@ public class App {
 
       // Expose our example servlet.
       context.addServlet(new ServletHolder(new ExampleServlet()), "/");
+      
+      context.addServlet(new ServletHolder(new HealthServlet()), "/health");
 
       // Expose Promtheus metrics.
       context.addServlet(new ServletHolder(new MetricsServlet()), "/metrics");
