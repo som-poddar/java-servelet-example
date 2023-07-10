@@ -23,7 +23,7 @@ import com.mycompany.service.HelloWorldServlet;
 
 public class App {
     public static void main( String[] args ) throws Exception {
-      Logger logger = LogManager.getLogger("JSONConfigDemo");
+      Logger logger = LogManager.getLogger("CONSOLE_JSON_APPENDER");
       logger.info("Server Starting ...");
       logger.debug("another degug statement");
 

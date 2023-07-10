@@ -1,0 +1,13 @@
+<Configuration status="debug" name="ConfigTest" packages="">
+    <Appenders>
+        <Console name="ConsoleJSONAppender" target="SYSTEM_OUT">
+            <JsonLayout complete="true" compact="false">
+                <KeyValuePair key="myCustomField" value="myCustomValue" />
+            </JsonLayout>
+        </Console>
+    </Appenders>
+
+    <Logger name="CONSOLE_JSON_APPENDER" level="TRACE" additivity="false">
+        <AppenderRef ref="ConsoleJSONAppender" />
+    </Logger>
+</Configuration>
