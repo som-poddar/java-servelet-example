@@ -12,14 +12,22 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import java.io.IOException;
 
+// import org.apache.log4j.LogManager;
+// import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mycompany.service.HealthServlet;
 import com.mycompany.service.HelloWorldServlet;
 
 public class App {
     public static void main( String[] args ) throws Exception {
-        System.out.println( "Server Starting ... " );
+      Logger logger = LogManager.getLogger("JSONConfigDemo");
+      logger.info("Server Starting ...");
+      logger.debug("another degug statement");
 
-              Server server = new Server(1234);
+      Server server = new Server(1234);
       ServletContextHandler context = new ServletContextHandler();
       context.setContextPath("/");
       server.setHandler(context);
@@ -36,7 +44,9 @@ public class App {
 
 
       // Start the webserver.
+      logger.debug("Server starting");
       server.start();
       server.join();
+      logger.debug("Server Ready");
     }
 }

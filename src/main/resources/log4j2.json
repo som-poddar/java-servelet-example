@@ -1,0 +1,31 @@
+{
+    "configuration": {
+        "status": "error",
+        "name": "JSONLogger",
+        "packages": "com.wbd.drmwidevine",
+        "ThresholdFilter": {
+            "level": "debug"
+        },
+        "appenders": {
+            "Console": {
+                "name": "STDOUT",
+                "JsonLayout": {
+                    "complete": "false",
+                    "compact": "true",
+                    "KeyValuePair": {
+                        "key": "AppName",
+                        "value": "CustomValue"
+                    }
+                }
+            }
+        },
+        "loggers": {
+            "root": {
+                "level": "debug",
+                "AppenderRef": {
+                    "ref": "STDOUT"
+                }
+            }
+        }
+    }
+}
