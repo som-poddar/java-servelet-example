@@ -1,13 +1,18 @@
-<Configuration status="debug" name="ConfigTest" packages="">
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
     <Appenders>
-        <Console name="ConsoleJSONAppender" target="SYSTEM_OUT">
-            <JsonLayout complete="true" compact="false">
+        <Console name="LogInJSON" target="SYSTEM_OUT">
+            <JsonLayout complete="true" compact="true">
                 <KeyValuePair key="myCustomField" value="myCustomValue" />
             </JsonLayout>
         </Console>
     </Appenders>
-
-    <Logger name="CONSOLE_JSON_APPENDER" level="TRACE" additivity="false">
-        <AppenderRef ref="ConsoleJSONAppender" />
-    </Logger>
+    <Loggers>
+        <Logger name="com.mycompany.app" level="debug" additivity="false">
+            <AppenderRef ref="LogInJSON" />
+        </Logger>
+        <Root level="error">
+            <AppenderRef ref="LogInJSON" />
+        </Root>
+    </Loggers>
 </Configuration>

@@ -22,8 +22,10 @@ import com.mycompany.service.HealthServlet;
 import com.mycompany.service.HelloWorldServlet;
 
 public class App {
+  	private static final Logger logger = LogManager.getLogger(App.class);
+
     public static void main( String[] args ) throws Exception {
-      Logger logger = LogManager.getLogger("CONSOLE_JSON_APPENDER");
+      // Logger logger = LogManager.getLogger("CONSOLE_JSON_APPENDER");
       logger.info("Server Starting ...");
       logger.debug("another degug statement");
 
